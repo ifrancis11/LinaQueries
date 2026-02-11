@@ -1,0 +1,18 @@
+USE [LINA2004]
+GO
+
+/****** Object:  View [dbo].[B1_ArticulosPreciosEspecialesB1SLQuery]    Script Date: 02/11/2026 11:51:51 a. m. ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE View [dbo].[B1_ArticulosPreciosEspecialesB1SLQuery]
+as
+select T0.CardCode,T1.CardName, T0.Itemcode,T2.Itemname,T0.Price,T0.Discount ,T0.ValidFrom,T0.ValidTo,T1.SlpCode
+from  OSPP T0  left join OCRD T1 on T0.CardCode=T1.cardcode
+inner join OITM T2 on T0.Itemcode=T2.Itemcode
+where T0.Valid='Y'
+GO
+
