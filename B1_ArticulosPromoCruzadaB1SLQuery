@@ -1,0 +1,19 @@
+USE [LINA2004]
+GO
+
+/****** Object:  View [dbo].[B1_ArticulosPromoCruzadaB1SLQuery]    Script Date: 02/11/2026 11:52:14 a. m. ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+create view [dbo].[B1_ArticulosPromoCruzadaB1SLQuery]
+as
+select T0.DocEntry,T0.U_PR_CardCode,T2.SlpCode,T0.U_PR_CardName,T0.U_PR_ItemCode Disparador,T0.U_PR_ItemName,T0.U_PR_CantMin 
+,T1.U_PR_ItemCode_D,T1.U_PR_Dscription,T1.U_PR_Qty,T1.U_PR_UMDetalle
+from [@PRM_H] T0 inner join [@PRM_D] T1 on T0.DocEntry=T1.DocEntry
+left join OCRD T2 on T0.U_PR_CardCode=T2.CardCode
+where T0.U_PR_Status='Y'
+GO
+
