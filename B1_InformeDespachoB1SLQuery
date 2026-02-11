@@ -1,16 +1,20 @@
 USE [LINA2004]
 GO
 
-/****** Object:  View [dbo].[B1_InformeDespachoB1SLQuery]    Script Date: 02/11/2026 11:53:28 a. m. ******/
+/****** Object:  View [dbo].[B1_InformeDespachoB1SLQuery]    Script Date: 02/11/2026 12:00:27 p. m. ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE view [dbo].[B1_InformeDespachoB1SLQuery]
+ALTER view [dbo].[B1_InformeDespachoB1SLQuery]
 as
-select distinct a.docdate, /*b.date_upld fechaenv,*/ a.docnum,  a.CardCode, a.CardName, a.u_SHIP_UDF1 /*b.SHIP_UDF1*/,a.u_SHIP_UDF2 /*b.SHIP_UDF2*/,a.u_SHIP_UDF3, c.TrgetEntry entrega,
+select distinct a.docdate, /*b.date_upld fechaenv,*/ a.docnum,  a.CardCode, a.CardName
+, a.u_SHIP_UDF1 'CodChofer' /*b.SHIP_UDF1*/ ,(select name from [@GONECHOFER] where code = a.u_SHIP_UDF1) 'NombreChofer'
+,a.u_SHIP_UDF2 'codPlaca'/*b.SHIP_UDF2*/, (select name from [@GONECAMION] where code = a.u_SHIP_UDF2) 'Placa'
+,a.u_SHIP_UDF3 'codMercaderista',(select name from [@GONEMERC] where code = a.u_SHIP_UDF3) 'Mercaderista'
+, c.TrgetEntry entrega,
 (select top 1 y.docnum from oinv y where y.DocEntry = (
 (Select distinct top 1 x.DocEntry from INV1 x where x.BaseEntry = c.TrgetEntry and x.BaseType = 15))) Factura, a.DocTotal, d.PymntGroup,
 (select top 1 y.DocTotal from oinv y where y.DocEntry = (
@@ -21,4 +25,5 @@ from ODLN a
 inner join DLN1 c on a.DocEntry = c.docentry inner join OCTG d on a.GroupNum = d.GroupNum 
 where c.TrgetEntry <>0
 GO
+
 
