@@ -1,0 +1,15 @@
+USE [LINA2004]
+GO
+
+/****** Object:  View [dbo].[B1_MercaderistasB1SLQuery]    Script Date: 02/11/2026 11:28:25 a. m. ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+create view [dbo].[B1_MercaderistasB1SLQuery]
+as
+select * from [@GONEMERC]
+GO
