@@ -1,0 +1,19 @@
+USE [LINA2004]
+GO
+
+/****** Object:  View [dbo].[B1_ArticulosGrupoDescuentoB1SLQuery]    Script Date: 02/11/2026 11:51:30 a. m. ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+create view [dbo].[B1_ArticulosGrupoDescuentoB1SLQuery]
+as
+SELECT T0.AbsEntry,T0.ObjCode ,T2.CardName,T2.SlpCode,T1.ObjKey,T3.ItemName,T1.DiscType,T1.Discount,T1.PayFor,T1.ForFree
+FROM OEDG T0 inner join	EDG1 T1 on T0.AbsEntry=T1.AbsEntry
+left join OCRD T2 on T0.ObjCode=T2.CardCode
+left join OITM T3 on T1.ObjKey=T3.ItemCode
+WHERE T0.ValidFor='Y'
+GO
+
