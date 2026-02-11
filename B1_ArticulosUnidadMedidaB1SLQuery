@@ -1,0 +1,37 @@
+USE [LINA2004]
+GO
+
+/****** Object:  View [dbo].[B1_ArticulosUnidadMedidaB1SLQuery]    Script Date: 02/11/2026 11:53:05 a. m. ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+Create View [dbo].[B1_ArticulosUnidadMedidaB1SLQuery]
+as
+SELECT 
+    itm12.itemcode,
+    (SELECT itemname FROM oitm WHERE itemcode=itm12.itemcode) itemname,
+    itm12.uomtype,
+    (SELECT uomcode FROM ouom WHERE uomentry=itm12.uomentry) uomcode,
+    itm12.height1,
+    (SELECT unitdisply FROM olgt WHERE unitcode=itm12.hght1unit) altura_unidad,
+    itm12.width1,
+    (SELECT unitdisply FROM olgt WHERE unitcode=itm12.wdth1unit) ancho_unidad,
+    itm12.Length1,
+    (SELECT unitdisply FROM olgt WHERE unitcode=itm12.len1unit) largo_unidad,
+    itm12.volume,
+    (SELECT voldisply FROM olgt WHERE unitcode=itm12.volunit) volumen_unidad,
+    itm12.weight1,
+    (SELECT unitdisply FROM owgt WHERE unitcode=itm12.wght1unit) peso_unidad,
+    (SELECT TOP 1 baseqty 
+     FROM UGP1 
+     WHERE UomEntry=itm12.UomEntry 
+       AND UgpEntry=(SELECT UgpEntry FROM OITM WHERE ItemCode=itm12.ItemCode)
+    ) BaseQty
+FROM itm12
+WHERE ItemCode in (select ItemCode from OITM where frozenFor='N')
+  AND UomType='S'
+GO
+
