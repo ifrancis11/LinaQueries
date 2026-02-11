@@ -1,0 +1,19 @@
+USE [LINA2004]
+GO
+
+/****** Object:  View [dbo].[IFS_ECOM_ItemB1SLQuery]    Script Date: 02/11/2026 11:55:17 a. m. ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+Create view [dbo].[IFS_ECOM_ItemB1SLQuery]
+as
+select X0.itemcode,X0.ItemName,X0.CodeBars,X0.ItmsGrpCod CodGrupoSap
+,(select itmsgrpnam from OITB where ItmsgrpCod=X0.itmsgrpcod) Grupo
+,X0.NumInSale As  UndM,X0.SalUnitMsr As CantUM ,X0.FirmCode CodMarca 
+,(select firmname from OMRC where FirmCode=X0.FirmCode) Marca ,X0.SWW,X0.VatGourpSa
+from OITM X0 where X0.FrozenFor='N'
+GO
+
