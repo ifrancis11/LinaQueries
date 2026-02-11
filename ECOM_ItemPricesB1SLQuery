@@ -1,0 +1,20 @@
+USE [LINA2004]
+GO
+
+/****** Object:  View [dbo].[ECOM_ItemPricesB1SLQuery]    Script Date: 02/11/2026 11:53:57 a. m. ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+CREATE view [dbo].[ECOM_ItemPricesB1SLQuery]
+as
+Select ItemCode,(Select itemname from OITM where ItemCode=ITM1.ItemCode) ItemName
+,(Select isnull(CodeBars,'0000') from OITM where ItemCode=ITM1.ItemCode) CodeBar
+,Price,PriceList,(select avgprice from OITM where itemcode=itm1.itemcode) ItemCost 
+from ITM1
+GO
+
