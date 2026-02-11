@@ -1,0 +1,27 @@
+USE [LINA2004]
+GO
+
+/****** Object:  View [dbo].[IFS_LinaActiveUsersB1SLQuery]    Script Date: 02/11/2026 11:55:41 a. m. ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE view [dbo].[IFS_LinaActiveUsersB1SLQuery]
+as
+select  T0.CardCode,T0.CardName,T3.GroupName,T0.E_Mail,T0.SlpCode,T2.SlpName,T2.Email mailVendedor,T0.ListNum,T5.ListName,T0.GroupNum,T4.PymntGroup
+,T0.LicTradNum RUC,T0.AddID 'DV', T0.Phone1,T0.Cellular,T0.Address,T0.GlblLocNum
+,T0.U_Mercad, (Select Descr from ufd1 where TableID = 'OCRD' and FieldID=21 and FldValue=T0.U_Mercad) 'DescripcionMerca'
+,T0.U_DiaVisita
+,T0.U_FrecVisita
+,T0.U_GteCanal,(Select Descr from ufd1 where TableID = 'OCRD' and FieldID=21 and FldValue=T0.U_GteCanal) 'DescripcionGteCanal'
+,T0.U_Ruta
+,T0.U_Canal, (Select Descr from ufd1 where TableID = 'OCRD' and FieldID=12 and FldValue=T0.U_Canal) 'DescripcionCanal'
+from OCRD T0 inner join OSLP T2 on T0.SlpCode=T2.SlpCode
+inner join OCRG T3 on T0.GroupCode=T3.GroupCode and T3.GroupType='C'
+inner join OCTG T4 on T0.GroupNum=T4.GroupNum
+inner join OPLN T5 on T0.ListNum = T5.ListNum
+where T0.cardtype='C' and T0.frozenFor='N'
+GO
+
