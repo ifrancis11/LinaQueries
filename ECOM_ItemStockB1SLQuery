@@ -1,0 +1,17 @@
+USE [LINA2004]
+GO
+
+/****** Object:  View [dbo].[ECOM_ItemStockB1SLQuery]    Script Date: 02/11/2026 11:54:24 a. m. ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+create view [dbo].[ECOM_ItemStockB1SLQuery]
+as
+Select Itemcode,WhsCode,Onhand InStock from OITW	
+GO
+
