@@ -1,0 +1,29 @@
+USE [LINA2004]
+GO
+
+/****** Object:  View [dbo].[ECOM_PSA_FACTURAS_PENDIENTES_B1SLQuery]    Script Date: 02/11/2026 11:54:50 a. m. ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+Create view [dbo].[ECOM_PSA_FACTURAS_PENDIENTES_B1SLQuery]
+as
+Select DocEntry,Docnum,Cardcode,DocDate,DocDueDate,DocTotal,DocType,DocTotal-PaidToDate SaldoPendiente,DocStatus,DocCur,SlpCode 
+,(Select top 1 whscode from INV1 where docentry=oinv.docentry) Bodega
+,'' u_DocNum_Ecom,ObjType
+From OINV
+where Docstatus='O'
+
+union all
+
+Select DocEntry,Docnum,Cardcode,DocDate,DocDueDate,DocTotal,DocType,DocTotal-PaidToDate SaldoPendiente,DocStatus,DocCur,SlpCode 
+,(Select top 1 whscode from RIN1 where docentry=ORIN.docentry) Bodega
+,'' u_DocNum_Ecom,ObjType
+From ORIN
+where Docstatus='O'
+GO
+
